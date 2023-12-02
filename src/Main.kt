@@ -1,9 +1,13 @@
+import Day02.Day02
 import day1.Day01
 
 
 fun main() {
 
-    val days: List<Solve> = mutableListOf(Day01())
+    val days: List<Solve> = mutableListOf(
+        Day01(),
+        Day02()
+    )
     days.forEach(::solveDay)
 }
 
