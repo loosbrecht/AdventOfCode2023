@@ -9,6 +9,8 @@ interface Solve {
     fun solvePartTwo(input: List<String>): String
 
     fun getDay():String
+
+    fun solveTestInput()
 }
 
 /**

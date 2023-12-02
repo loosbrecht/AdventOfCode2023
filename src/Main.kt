@@ -9,7 +9,8 @@ fun main() {
 
 
 fun solveDay(s: Solve) {
-   val input = readInput(s.getDay())
+    s.solveTestInput()
+    val input = readInput(s.getDay())
     println("--- Solution for ${s.getDay()} ---")
     println("Part 1\t: ${s.solvePartOne(input)}")
     println("Part 2\t: ${s.solvePartTwo(input)}")

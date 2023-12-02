@@ -1,7 +1,7 @@
 package day1
 
 import Solve
-
+import readInput
 
 
 class Day01 : Solve {
@@ -18,6 +18,13 @@ class Day01 : Solve {
 
     override fun getDay(): String {
         return "Day01"
+    }
+
+    override fun solveTestInput() {
+        val testInput = readInput("Day01_test")
+        check(solvePartOne(testInput) == "142")
+        val testInputPart2 = readInput("Day01-2_test")
+        check(solvePartTwo(testInputPart2) == "281")
     }
 
 
