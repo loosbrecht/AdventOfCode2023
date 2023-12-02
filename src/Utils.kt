@@ -3,6 +3,14 @@ import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
+
+interface Solve {
+    fun solvePartOne(input: List<String>): String
+    fun solvePartTwo(input: List<String>): String
+
+    fun getDay():String
+}
+
 /**
  * Reads lines from the given input txt file.
  */
