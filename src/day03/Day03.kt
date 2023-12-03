@@ -9,7 +9,8 @@ class Day03 : Solve("4361", "467835") {
     }
 
     override fun solvePartTwo(input: List<String>): String {
-       return ""
+       val schematic= Schematic(input)
+        return  schematic.validGears().sum().toString()
     }
 
     override fun getDay(): String {

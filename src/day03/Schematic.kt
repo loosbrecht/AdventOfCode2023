@@ -23,36 +23,44 @@ class Schematic(val input: List<String>) {
                     digits.clear()
                     isPart = false
                 }
-
             }
         }
         return partNumbers
     }
 
-//    fun findGearRatios(): List<Int> {
-//        val gears = mutableListOf<Gear>()
-//        val digits = mutableListOf<Char>()
-//        var isPart = false
-//        for ((i, schemaLine) in schema.withIndex()) {
-//            for ((j, gearPart) in schemaLine.withIndex()) {
-//                if (gearPart.isDigit()) {
-//                    digits.add(gearPart)
-//                    if (!isPart) {
-//                        isPart = isValidPart(i, j)
-//                    }
-//                } else if (digits.size > 0) {
-//                    if (isPart) {
-//                        gears.add(toNumber(digits))
-//                    }
-//                    digits.clear()
-//                    isPart = false
-//                }
-//
-//            }
-//        }
-//        return partNumbers
-//
-//    }
+
+    fun validGears(): List<Int> {
+        val gears = mutableMapOf<Symbol, MutableList<Int>>()
+        val digits = mutableListOf<Char>()
+        var isPart = false
+        var symbols = listOf<Symbol>()
+        for ((i, schemaLine) in schema.withIndex()) {
+            for ((j, gearPart) in schemaLine.withIndex()) {
+                if (gearPart.isDigit()) {
+                    digits.add(gearPart)
+                    if (!isPart) {
+                        val p = isValidPart(i, j, isGear)
+                        isPart = p.first
+                        symbols = p.second
+                    }
+                } else if (digits.size > 0) {
+                    if (isPart) {
+                        for (symbol in symbols) {
+                            var numbers = gears[symbol]
+                            if (numbers == null)
+                                numbers = mutableListOf()
+                            numbers.add(toNumber(digits))
+                            gears[symbol] = numbers
+                        }
+                    }
+                    digits.clear()
+                    isPart = false
+                }
+
+            }
+        }
+      return  gears.filter { it.value.size == 2 }.map { it.value.toList().reduce{acc, i ->acc *i  } }
+    }
 
     private fun toNumber(digitList: List<Char>): Int {
         var factor = 1
@@ -60,7 +68,6 @@ class Schematic(val input: List<String>) {
         for (c in digitList.reversed()) {
             number += c.digitToInt() * factor
             factor *= 10
-
         }
         return number
     }
@@ -109,12 +116,11 @@ class Schematic(val input: List<String>) {
     }
 
     private val isSymbol: (ch: Char) -> Boolean = { ch -> (!ch.isDigit() && ch != '.') }
+    private val isGear: (ch: Char) -> Boolean = { ch -> ch == '*' }
 
     private fun createSymbol(x: Int, y: Int): Symbol {
         return Symbol(x, y, schema[x][y])
     }
 }
-
-data class Gear(val x: Int, val y: Int, val ratios: MutableList<Int>)
 
 data class Symbol(val x: Int, val y: Int, val ch: Char)
