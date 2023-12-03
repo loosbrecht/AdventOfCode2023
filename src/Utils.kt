@@ -4,13 +4,17 @@ import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
 
-interface Solve {
-    fun solvePartOne(input: List<String>): String
-    fun solvePartTwo(input: List<String>): String
+abstract class Solve(val testSolution1 :String, val testSolution2 :String) {
+   abstract fun solvePartOne(input: List<String>): String
+  abstract  fun solvePartTwo(input: List<String>): String
 
-    fun getDay():String
+   abstract fun getDay():String
 
-    fun solveTestInput()
+    open fun solveTestInput(){
+        val testInput = readInput("${getDay()}_test")
+        check(solvePartOne(testInput) == testSolution1)
+        check(solvePartTwo(testInput) == testSolution2)
+    }
 }
 
 /**

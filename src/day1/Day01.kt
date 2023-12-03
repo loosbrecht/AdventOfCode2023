@@ -4,7 +4,7 @@ import Solve
 import readInput
 
 
-class Day01 : Solve {
+class Day01 : Solve("142","281") {
 
 
     override fun solvePartOne(input: List<String>): String {

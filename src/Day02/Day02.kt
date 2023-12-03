@@ -4,7 +4,7 @@ import Solve
 import println
 import readInput
 
-class Day02 : Solve {
+class Day02 : Solve("8","2286") {
     override fun solvePartOne(input: List<String>): String {
         val maxSet = Set(12, 13, 14)
         val sum = input.map { Game.create(it) }.filter { it.possible(maxSet) }.sumOf { it.id }
@@ -20,9 +20,4 @@ class Day02 : Solve {
         return "Day02"
     }
 
-    override fun solveTestInput() {
-        val testInput = readInput("Day02_test")
-        check(solvePartOne(testInput) == "8")
-        check(solvePartTwo(testInput) == "2286")
-    }
 }
