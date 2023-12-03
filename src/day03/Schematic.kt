@@ -58,6 +58,18 @@ class Schematic(val input: List<String>) {
                 }
 
             }
+            //for the things of the last line
+            if (isPart) {
+                for (symbol in symbols) {
+                    var numbers = gears[symbol]
+                    if (numbers == null)
+                        numbers = mutableListOf()
+                    numbers.add(toNumber(digits))
+                    gears[symbol] = numbers
+                }
+            }
+            digits.clear()
+            isPart = false
         }
       return  gears.filter { it.value.size == 2 }.map { it.value.toList().reduce{acc, i ->acc *i  } }
     }
