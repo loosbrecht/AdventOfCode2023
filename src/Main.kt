@@ -1,5 +1,6 @@
 import Day02.Day02
 import Day04.Day04
+import Day05.Day05
 import day03.Day03
 import day1.Day01
 import kotlin.system.measureTimeMillis
@@ -7,11 +8,13 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
 
+
     val days: List<Solve> = mutableListOf(
-        Day01(),
-        Day02(),
-        Day03(),
-        Day04()
+//            Day01(),
+//            Day02(),
+//            Day03(),
+//            Day04(),
+            Day05()
     )
     days.forEach(::solveDay)
 }

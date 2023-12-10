@@ -31,7 +31,7 @@ class Day01 : Solve("142","281") {
     private fun retrieveDigits(s: String): Pair<Int, Int> {
         val digits = s.toCharArray()
             .map { it.digitToIntOrNull() }.filterNotNull()
-        return Pair(digits.first, digits.last)
+        return Pair(digits.first(), digits.last())
     }
 
     private fun retrieveDigitsIncludingSpelledOut(s: String): Pair<Int, Int> {
