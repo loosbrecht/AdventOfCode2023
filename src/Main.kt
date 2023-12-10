@@ -3,12 +3,15 @@ import Day04.Day04
 import Day05.Day05
 import day03.Day03
 import day1.Day01
+import kotlinx.coroutines.*
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
+import kotlin.time.Duration.Companion.milliseconds
 
 
-fun main() {
-
-
+fun main() = runBlocking {
+//    executeManyCoroutinesInParallelUsingAsync()
+//    return@runBlocking
     val days: List<Solve> = mutableListOf(
 //            Day01(),
 //            Day02(),
@@ -16,11 +19,32 @@ fun main() {
 //            Day04(),
             Day05()
     )
-    days.forEach(::solveDay)
+
+    for (day in days) {
+        solveDay(day)
+    }
+
+
+}
+
+suspend fun executeManyCoroutinesInParallelUsingAsync(): List<Int> {
+    val result = runBlocking {
+        (1..5).map { n ->
+            async {
+                println("start something $n")
+                val delay = Random.nextInt(100, 1000)
+                delay(delay.milliseconds)
+                println("- processing $n")
+                n * n
+            }
+        }.awaitAll()
+    }
+    println("Result: $result")
+    return result
 }
 
 
-fun solveDay(s: Solve) {
+suspend fun solveDay(s: Solve) {
     s.solveTestInput()
     val input = readInput(s.getDay())
     println("--- Solution for ${s.getDay()} ---")

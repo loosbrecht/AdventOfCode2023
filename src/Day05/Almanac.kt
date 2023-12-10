@@ -1,5 +1,11 @@
 package Day05
 
+
+import kotlinx.coroutines.*
+import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
+
+
 class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
 
@@ -16,13 +22,52 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
         return seeds.map {
             findSeedToLocation(it)
         }.min()
+    }
 
+    suspend fun findLowestLocationWhenSeedsArePairs(): Long {
+
+        val result = coroutineScope {
+
+            seeds.chunked(2).map { n ->
+                async { findLowestLocationForRange(n) }
+
+            }.awaitAll()
+        }
+        return result.min()
+    }
+
+    private suspend fun dosome(n: List<Long>): Long {
+        delay(10 * n.first())
+        println("start something $n")
+        delay(10 * n.last())
+        println("- processing $n")
+        // n * n
+        return n.first()
+    }
+
+
+    suspend fun findLowestLocationForRange(pair: List<Long>): Long {
+        delay(100)
+        println("Start for ${pair.first()} and ${pair.last()}")
+
+        var minLowestLocation = Long.MAX_VALUE
+        var current = pair.first()
+        val end = pair.first() + pair.last()
+        while (current < end) {
+            val location = findSeedToLocation(current)
+            if (location < minLowestLocation) {
+                minLowestLocation = location
+            }
+            current++
+        }
+        println("Done for ${pair.first()} and ${pair.last()} with lowest $minLowestLocation")
+        return minLowestLocation
     }
 
     companion object {
-        fun create(input: List<String>): Almanac {
+        fun create(input: List<String>, seedListIsARange: Boolean): Almanac {
             val seeds = input[0].split(":")[1]
-            val seedsNums = seeds.split(" ").filterNot { it == "" }.map { it.toLong() }
+            var seedsNums = seeds.split(" ").filterNot { it == "" }.map { it.toLong() }
             var tmpName = MapType.UNKNOWN
             var tmpRangeNameLst = mutableListOf<RangeLine>()
             var name = false
@@ -44,7 +89,30 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
             }
             convertMapLst.add(ConvertMap(tmpName, tmpRangeNameLst))
+//            if (seedListIsARange) {
+//                val pairs = seedsNums.chunked(2)
+//                val set = mutableSetOf<Long>()
+//                for (pair in pairs) {
+//                    val range = range(pair.first(), pair.last())
+//                    set.addAll(range)
+//                }
+//
+//                seedsNums = set.toList()
+//            }
+
+
             return Almanac(seedsNums, convertMapLst)
+        }
+
+        private fun range(start: Long, range: Long): List<Long> {
+            val lst = mutableListOf<Long>()
+            var current = start
+            while (current < (start + range)) {
+                lst.add(current)
+                current++
+            }
+            println("I got here")
+            return lst
         }
     }
 }

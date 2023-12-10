@@ -7,7 +7,7 @@ class Day04 : Solve("13", "30") {
         return input.map { GameCard.create(it) }.sumOf { it.calculatePoints() }.toString()
     }
 
-    override fun solvePartTwo(input: List<String>): String {
+    override suspend fun solvePartTwo(input: List<String>): String {
         val gameCardsOriginal = input.map { GameCard.create(it) }.toList()
         val game = Game(gameCardsOriginal)
         return game.playGame().toString()

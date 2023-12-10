@@ -8,7 +8,7 @@ class Day03 : Solve("4361", "467835") {
       return  schematic.validPartNumbers().sum().toString()
     }
 
-    override fun solvePartTwo(input: List<String>): String {
+    override suspend fun solvePartTwo(input: List<String>): String {
        val schematic= Schematic(input)
         return  schematic.validGears().sum().toString()
     }

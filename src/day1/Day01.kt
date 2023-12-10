@@ -11,7 +11,7 @@ class Day01 : Solve("142","281") {
         return input.map { retrieveDigits(it) }.map { number(it) }.reduce { acc, i -> acc + i }.toString()
     }
 
-    override fun solvePartTwo(input: List<String>): String {
+    override suspend fun solvePartTwo(input: List<String>): String {
         return input.map { retrieveDigitsIncludingSpelledOut(it) }.map { number(it) }.reduce { acc, i -> acc + i }
             .toString()
     }
@@ -20,7 +20,7 @@ class Day01 : Solve("142","281") {
         return "Day01"
     }
 
-    override fun solveTestInput() {
+    override suspend fun solveTestInput() {
         val testInput = readInput("Day01_test")
         check(solvePartOne(testInput) == "142")
         val testInputPart2 = readInput("Day01-2_test")

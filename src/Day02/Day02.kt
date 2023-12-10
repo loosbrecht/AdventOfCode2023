@@ -11,7 +11,7 @@ class Day02 : Solve("8","2286") {
         return sum.toString()
     }
 
-    override fun solvePartTwo(input: List<String>): String {
+    override suspend fun solvePartTwo(input: List<String>): String {
         val sum = input.map { Game.create(it) }.sumOf { it.leastPossibleGameSet().power() }
         return sum.toString()
     }
