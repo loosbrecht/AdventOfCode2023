@@ -10,9 +10,9 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
 
     private val orderOfConversions = MapType.entries.drop(1).mapNotNull { mt -> convertMaps.find { mt == it.mapName } }
-    private fun findSeedToLocation(seed: Long): Long {
+    private fun findSeedToLocation(seed: Long, orderOfconverLst: List<ConvertMap>): Long {
         var step = seed
-        for (orderOfConversion in orderOfConversions) {
+        for (orderOfConversion in orderOfconverLst) {
             step = orderOfConversion.getDestination(step)
         }
         return step
@@ -20,47 +20,37 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
     fun findLowestLocation(): Long {
         return seeds.map {
-            findSeedToLocation(it)
+            findSeedToLocation(it, orderOfConversions)
         }.min()
     }
 
     suspend fun findLowestLocationWhenSeedsArePairs(): Long {
 
         val result = coroutineScope {
-
             seeds.chunked(2).map { n ->
-                async { findLowestLocationForRange(n) }
+                val ooC = orderOfConversions.toList()
+                async(start = CoroutineStart.LAZY) { findLowestLocationForRange(n, ooC) }
 
             }.awaitAll()
         }
         return result.min()
     }
 
-    private suspend fun dosome(n: List<Long>): Long {
-        delay(10 * n.first())
-        println("start something $n")
-        delay(10 * n.last())
-        println("- processing $n")
-        // n * n
-        return n.first()
-    }
 
-
-    suspend fun findLowestLocationForRange(pair: List<Long>): Long {
-        delay(100)
-        println("Start for ${pair.first()} and ${pair.last()}")
+    suspend fun findLowestLocationForRange(pair: List<Long>, orderOfconverLst: List<ConvertMap>): Long {
+       // println("Start for ${pair.first()} and ${pair.last()}")
 
         var minLowestLocation = Long.MAX_VALUE
         var current = pair.first()
         val end = pair.first() + pair.last()
         while (current < end) {
-            val location = findSeedToLocation(current)
+            val location = findSeedToLocation(current, orderOfconverLst)
             if (location < minLowestLocation) {
                 minLowestLocation = location
             }
             current++
         }
-        println("Done for ${pair.first()} and ${pair.last()} with lowest $minLowestLocation")
+     //   println("Done for ${pair.first()} and ${pair.last()} with lowest $minLowestLocation")
         return minLowestLocation
     }
 
@@ -89,16 +79,7 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
             }
             convertMapLst.add(ConvertMap(tmpName, tmpRangeNameLst))
-//            if (seedListIsARange) {
-//                val pairs = seedsNums.chunked(2)
-//                val set = mutableSetOf<Long>()
-//                for (pair in pairs) {
-//                    val range = range(pair.first(), pair.last())
-//                    set.addAll(range)
-//                }
-//
-//                seedsNums = set.toList()
-//            }
+
 
 
             return Almanac(seedsNums, convertMapLst)

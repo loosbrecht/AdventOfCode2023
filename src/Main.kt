@@ -10,14 +10,13 @@ import kotlin.time.Duration.Companion.milliseconds
 
 
 fun main() = runBlocking {
-//    executeManyCoroutinesInParallelUsingAsync()
-//    return@runBlocking
+
     val days: List<Solve> = mutableListOf(
 //            Day01(),
 //            Day02(),
 //            Day03(),
 //            Day04(),
-            Day05()
+            //   Day05()
     )
 
     for (day in days) {
@@ -25,22 +24,6 @@ fun main() = runBlocking {
     }
 
 
-}
-
-suspend fun executeManyCoroutinesInParallelUsingAsync(): List<Int> {
-    val result = runBlocking {
-        (1..5).map { n ->
-            async {
-                println("start something $n")
-                val delay = Random.nextInt(100, 1000)
-                delay(delay.milliseconds)
-                println("- processing $n")
-                n * n
-            }
-        }.awaitAll()
-    }
-    println("Result: $result")
-    return result
 }
 
 
