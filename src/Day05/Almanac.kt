@@ -1,17 +1,13 @@
 package Day05
 
-import kotlin.system.measureTimeMillis
-
 class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
-    //drop unknown
+
     private val orderOfConversions = MapType.entries.drop(1).mapNotNull { mt -> convertMaps.find { mt == it.mapName } }
     private fun findSeedToLocation(seed: Long): Long {
         var step = seed
         for (orderOfConversion in orderOfConversions) {
             step = orderOfConversion.getDestination(step)
-//            println("$orderOfConversion $step -> $nxtStep")
-//            step = nxtStep
         }
         return step
     }
@@ -22,15 +18,6 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
         }.min()
 
     }
-
-//    private fun process(it: Long): Long {
-//        var location: Long
-//        val elapsedPart1 = measureTimeMillis {
-//            location = findSeedToLocation(it)
-//        }
-//        println("$it elapsed time $elapsedPart1")
-//        return location
-//    }
 
     companion object {
         fun create(input: List<String>): Almanac {
@@ -64,21 +51,14 @@ class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {
 
 
 class ConvertMap(val mapName: MapType, val rangeLines: List<RangeLine>) {
-    private val rangeMap: MutableMap<Long, Long> = mutableMapOf()
-
-    init {
-
-        //TODO change this from a map to a calculation which should be doable
-        for (rangeLine in rangeLines) {
-            for (i in 0..<rangeLine.range) {
-                rangeMap[rangeLine.source + i] = rangeLine.destination + i
-            }
-        }
-    }
 
     fun getDestination(source: Long): Long {
-        return rangeMap.getOrElse(source) { source }
-
+        for (rangeLine in rangeLines) {
+            if (rangeLine.inRange(source)) {
+                return rangeLine.calculateNewDestination(source)
+            }
+        }
+        return source
 
     }
 
@@ -87,7 +67,15 @@ class ConvertMap(val mapName: MapType, val rangeLines: List<RangeLine>) {
     }
 }
 
-data class RangeLine(val destination: Long, val source: Long, val range: Long)
+class RangeLine(val destination: Long, val source: Long, val range: Long) {
+    fun inRange(value: Long): Boolean {
+        return (value >= source) && (value < source + range)
+    }
+
+    fun calculateNewDestination(value: Long): Long {
+        return value + (destination - source)
+    }
+}
 
 enum class MapType {
     UNKNOWN, SEEDTOSOIL, SOILTOFERTILIZER, FERTILIZERTOWATER, WATERTOLIGHT, LIGHTTOTEMPERATURE, TEMPERATURETOHUMIDITY, HUMIDITYTOLOCATION;
