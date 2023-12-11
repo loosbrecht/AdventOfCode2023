@@ -1,6 +1,7 @@
 import Day02.Day02
 import Day04.Day04
 import Day05.Day05
+import Day06.Day06
 import day03.Day03
 import day1.Day01
 import kotlinx.coroutines.*
@@ -17,6 +18,7 @@ fun main() = runBlocking {
 //            Day03(),
 //            Day04(),
             //   Day05()
+            Day06()
     )
 
     for (day in days) {
