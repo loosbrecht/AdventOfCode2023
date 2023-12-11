@@ -44,7 +44,7 @@ class HandTypeTest {
 
     @Test
     fun testDefineHandType_HighCard() {
-        assertEquals(HandType.HIGH_CARD, HandType.defineHandType("34566"))
+        assertEquals(HandType.HIGH_CARD, HandType.defineHandType("34567"))
 
     }
 }
