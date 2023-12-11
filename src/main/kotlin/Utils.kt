@@ -20,7 +20,7 @@ abstract class Solve(val testSolution1: String, val testSolution2: String) {
 /**
  * Reads lines from the given input txt file.
  */
-fun readInput(name: String) = Path("src/input/$name.txt").readLines()
+fun readInput(name: String) = Path("src/main/kotlin/input/$name.txt").readLines()
 
 /**
  * Converts string to md5 hash.
