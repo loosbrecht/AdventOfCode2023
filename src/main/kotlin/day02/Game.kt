@@ -1,4 +1,4 @@
-package Day02
+package day02
 
 class Game(val id: Int, val sets: List<Set>) {
 

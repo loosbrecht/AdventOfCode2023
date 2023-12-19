@@ -1,8 +1,6 @@
-package Day02
+package day02
 
 import Solve
-import println
-import readInput
 
 class Day02 : Solve("8","2286") {
     override fun solvePartOne(input: List<String>): String {
@@ -17,7 +15,7 @@ class Day02 : Solve("8","2286") {
     }
 
     override fun getDay(): String {
-        return "Day02"
+        return "day02"
     }
 
 }

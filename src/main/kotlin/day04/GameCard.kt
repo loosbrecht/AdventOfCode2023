@@ -1,6 +1,4 @@
-package Day04
-
-import kotlin.math.pow
+package day04
 
 class GameCard(val id: Int, private val winningNumbers: Set<Int>, private val gameNumbers: Set<Int>) {
 

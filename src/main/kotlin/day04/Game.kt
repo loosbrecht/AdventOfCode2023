@@ -1,4 +1,4 @@
-package Day04
+package day04
 
 class Game(private val gameCards: List<GameCard>) {
 

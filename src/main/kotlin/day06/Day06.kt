@@ -1,4 +1,4 @@
-package Day06
+package day06
 
 import Solve
 
@@ -22,6 +22,6 @@ class Day06 : Solve("288", "71503") {
     }
 
     override fun getDay(): String {
-        return "Day06"
+        return "day06"
     }
 }

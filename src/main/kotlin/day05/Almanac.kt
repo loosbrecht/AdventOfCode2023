@@ -1,9 +1,7 @@
-package Day05
+package day05
 
 
 import kotlinx.coroutines.*
-import kotlin.random.Random
-import kotlin.time.Duration.Companion.milliseconds
 
 
 class Almanac(val seeds: List<Long>, val convertMaps: List<ConvertMap>) {

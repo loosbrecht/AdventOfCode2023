@@ -1,4 +1,4 @@
-package Day06
+package day06
 
 class Race(private val totalRaceTime: Long, private val bestDistanceEver: Long) {
 
