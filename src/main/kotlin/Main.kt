@@ -13,7 +13,7 @@ fun main() = runBlocking {
 //            Day04(),
             //   Day05()
             Day06(),
-            Day07(),
+            Day07(), // part 2 is broken, fix it later
     )
 
     for (day in days) {
