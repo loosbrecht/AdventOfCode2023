@@ -1,6 +1,7 @@
 import day06.Day06
 import day07.Day07
 import day08.Day08
+import day09.Day09
 import kotlinx.coroutines.runBlocking
 import kotlin.system.measureTimeMillis
 
@@ -13,9 +14,10 @@ fun main() = runBlocking {
 //            Day03(),
 //            Day04(),
         //   Day05()
-        Day06(),
-        Day07(), // part 2 is broken, fix it later
-        Day08(),
+        // Day06(),
+        // Day07(), // part 2 is broken, fix it later
+        // Day08(),
+        Day09(),
     )
 
     for (day in days) {
